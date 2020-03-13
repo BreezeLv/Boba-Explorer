@@ -1,0 +1,18 @@
+.icon-reference {
+    display: block;
+    margin: 0;
+    font-size: 0.6vw;
+}
+
+.footer-ul {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    list-style-type: none;
+    padding: 0 0;
+}
+
+ul.footer-ul li {
+    margin: 0 2em;
+    display: inline-block;
+}
