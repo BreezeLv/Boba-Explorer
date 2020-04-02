@@ -1,0 +1,1 @@
+export const server_addr = 'http://localhost:3000';
