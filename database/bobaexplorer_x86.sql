@@ -33,7 +33,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `bobaexplorer_x86`.`PRODUCT` (
   `product_id` INT NOT NULL,
   `product_name` VARCHAR(45) NULL,
-  `size:price` VARCHAR(45) NULL,
+  `size` VARCHAR(45) NULL,
+  `price` VARCHAR(45) NULL,
   PRIMARY KEY (`product_id`))
 ENGINE = InnoDB;
 
