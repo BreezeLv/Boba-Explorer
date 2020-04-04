@@ -13,10 +13,15 @@ CORS(app)
 def root():
     return 'SERVER ALIVE'
 
-@app.route('/search')
+@app.route('/gets/',methods=['POST'])
 def search():
-    query = request.args.get('q')
-    return {"echo" : query}
+    conn = pymysql.connect(user='x86', host='localhost', passwd='x86x86', db='boba',cursorclass=pymysql.cursors.DictCursor)
+    cur = conn.cursor()
+    S = request.values.get('question')
+    sql = "select * from product where product_name like '%" + S + "%'"
+    cur.execute(sql)
+    datas = cur.fetchall()
+    return datas
 
 @app.route('/register', methods=['POST'])
 def register():
