@@ -36,8 +36,8 @@ function NavBar() {
       </div>
 
       <div className='login-container'>
-        <Button inverted color='blue' onClick={()=>console.log("someone wants to login")}>Log In</Button>
-        <Button inverted color='olive' onClick={()=>console.log("someone wants to login")}>Register</Button>
+        <Button inverted color='blue' href='/login'>Log In</Button>
+        <Button inverted color='olive' href='/register'>Register</Button>
       </div>
 
     </FlexContainer>

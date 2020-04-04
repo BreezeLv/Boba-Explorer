@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import HomePage from '../HomePage';
+import LoginPage from '../LoginPage';
 import Footer from '../../components/Footer';
 import NavBar from '../../components/NavBar';
 
@@ -23,6 +24,8 @@ function App() {
 
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route exact path="/login" render={(props) => <LoginPage {...props} isLogin={true} />} />
+        <Route exact path="/register" render={(props) => <LoginPage {...props} isLogin={false} />} />
         <Route path="/explore" component={HomePage} />
         <Route path="" component={HomePage} />
       </Switch>
