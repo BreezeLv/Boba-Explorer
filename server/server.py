@@ -31,10 +31,10 @@ def search():
 
 @app.route('/register', methods=['POST'])
 def register():
-    req_body = request.json()
+    req_body = request.json
     username = req_body['username']
     password = req_body['password']
-    email = req_body['eamil']
+    email = req_body['email']
     # created_date = ddmmyy
 
     # TODO: If username, password all valid, create a new user, insert proper
@@ -43,10 +43,10 @@ def register():
 
     return {'uid':12345}
 
-@app.route('/signin', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def signin():
-    req_body = request.json()
-    username = req_body['username']
+    req_body = request.json
+    email = req_body['email']
     password = req_body['password']
     
     # TODO: If username, password all valid, log user in
