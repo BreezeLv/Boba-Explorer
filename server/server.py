@@ -21,7 +21,13 @@ def search():
     sql = "select * from product where product_name like '%" + S + "%'"
     cur.execute(sql)
     datas = cur.fetchall()
-    return render_template('search.html',items=datas)
+    #return render_template('search.html',items=datas)
+    dict = {}
+    count = 1
+    for i in datas:
+        dict[count] = i
+        count+=1
+    return dict
 
 @app.route('/register', methods=['POST'])
 def register():
