@@ -16,9 +16,8 @@ def root():
 @app.route('/search', methods=['POST'])
 def search():
     cur = conn.cursor()
-    req_body = request.json
-    searchInput = req_body['searchInput']
-    sql = "select * from product where product_name like '%" + searchInput + "%'"
+    query = request.args.get('q')
+    sql = "select * from product where product_name like '%" + query + "%'"
     cur.execute(sql)
     datas = cur.fetchall()
     dict = {}
