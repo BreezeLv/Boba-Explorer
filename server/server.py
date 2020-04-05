@@ -13,20 +13,20 @@ CORS(app)
 def root():
     return 'SERVER ALIVE'
 
-@app.route('/gets/',methods=['POST'])
+@app.route('/search', methods=['POST'])
 def search():
-    conn = pymysql.connect(user='x86', host='localhost', passwd='x86x86', db='boba',cursorclass=pymysql.cursors.DictCursor)
     cur = conn.cursor()
-    S = request.values.get('question')
-    sql = "select * from product where product_name like '%" + S + "%'"
+    req_body = request.json
+    searchInput = req_body['searchInput']
+    sql = "select * from product where product_name like '%" + searchInput + "%'"
     cur.execute(sql)
     datas = cur.fetchall()
-    #return render_template('search.html',items=datas)
     dict = {}
     count = 1
     for i in datas:
         dict[count] = i
-        count+=1
+        count += 1
+    print(dict)
     return dict
 
 @app.route('/register', methods=['POST'])
