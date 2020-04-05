@@ -5,15 +5,17 @@
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import pymysql
 
 app = Flask(__name__)
 CORS(app)
+
 conn = pymysql.connect(user='x86', host='localhost', passwd='x86x86', db='bobaexplorer_x86',cursorclass=pymysql.cursors.DictCursor)
 @app.route('/')
 def root():
     return 'SERVER ALIVE'
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods=['GET'])
 def search():
     cur = conn.cursor()
     query = request.args.get('q')
