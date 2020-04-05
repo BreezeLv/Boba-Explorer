@@ -8,7 +8,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
-
+conn = pymysql.connect(user='x86', host='localhost', passwd='x86x86', db='bobaexplorer_x86',cursorclass=pymysql.cursors.DictCursor)
 @app.route('/')
 def root():
     return 'SERVER ALIVE'
