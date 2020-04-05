@@ -2,13 +2,16 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import './index.css';
 import * as cons from '../../const';
+import { Redirect } from 'react-router';
 
 class HomePage extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            searchInput : ''
+            searchInput : '',
+            redirect : false,
+            searchResult : {}
         };
     }
 
@@ -17,16 +20,23 @@ class HomePage extends React.Component {
     }
 
     onSearch = () => {
-        console.log(this.state);
-        fetch(cons.server_addr+'/search?q='+this.state.searchInput)
+        const query_url = cons.server_addr+'/search?q='+this.state.searchInput;
+
+        fetch(query_url)
         .then(res => res.json())
         .then((res) => {
             console.log(res)
+            // this.props.history.push(query_url)
+            this.setState({redirect:true, searchResult:res});
         })
         .catch(console.log)
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect push to={{pathname:"/search", state:{searchResult:this.state.searchResult}}}/>;
+        }
+
         return (
             <>
                 <Helmet>

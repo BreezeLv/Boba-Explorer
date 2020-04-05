@@ -1,16 +1,25 @@
-# Dependencies: Flask, flask-cors
+# Dependencies: Flask, flask-cors, pymysql, simplejson
 # To install Flask: `pip install Flask`
 # To install flask-cors: `pip install -U flask-cors`
+# To install pymsql: `python3 -m pip install PyMySQL[rsa]`
+# To install simplejson: `pip install simplejson`
 # Follow their offical documentation for details
+
+# Note before connected to local mysql db, you will need to set up a privilege(s) granted account
+# For simplicity, let's create a user called x86 for all of us
+# To create user: run `CREATE USER 'x86'@'localhost' IDENTIFIED BY 'x86x86';` as root
+# To grant privilege: run `GRANT ALL PRIVILEGES ON boba.* TO 'x86'@'localhost';` as root
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pymysql
+import simplejson as json
 
 app = Flask(__name__)
 CORS(app)
 
-conn = pymysql.connect(user='x86', host='localhost', passwd='x86x86', db='bobaexplorer_x86',cursorclass=pymysql.cursors.DictCursor)
+conn = pymysql.connect(user='x86', host='localhost', passwd='x86x86', db='boba',cursorclass=pymysql.cursors.DictCursor)
+
 @app.route('/')
 def root():
     return 'SERVER ALIVE'
