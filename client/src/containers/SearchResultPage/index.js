@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchResultCard from '../../components/SearchResultCard';
 
+
 function SearchResultPage(props) {
     let searchResult = props.location.state.searchResult;
     console.log(searchResult);
