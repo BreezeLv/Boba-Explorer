@@ -20,21 +20,25 @@ class HomePage extends React.Component {
     }
 
     onSearch = () => {
-        const query_url = cons.server_addr+'/search?q='+this.state.searchInput;
+        const query_url = 'q='+this.state.searchInput;
 
-        fetch(query_url)
+        fetch(cons.server_addr+'/search?'+query_url)
         .then(res => res.json())
         .then((res) => {
             console.log(res)
             // this.props.history.push(query_url)
-            this.setState({redirect:true, searchResult:res});
+            this.setState({redirect:true, searchResult:res, query_url:query_url});
         })
         .catch(console.log)
     }
 
     render() {
         if (this.state.redirect) {
-            return <Redirect push to={{pathname:"/search", state:{searchResult:this.state.searchResult}}}/>;
+            return <Redirect push to={{
+                pathname : "/search",
+                search : this.state.query_url,
+                state : {searchResult:this.state.searchResult}
+            }}/>;
         }
 
         return (
