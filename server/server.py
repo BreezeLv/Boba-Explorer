@@ -36,7 +36,6 @@ def search():
     for i in datas:
         dict[count] = i
         count += 1
-    print(dict)
     return dict
 
 @app.route('/register', methods=['POST'])
