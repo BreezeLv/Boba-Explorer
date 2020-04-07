@@ -85,5 +85,17 @@ def signin():
     else:
         return {'err_msg':'Incorrect Username'}
 
+
+@app.route('/write-review', methods=['POST'])
+def write_review():
+    req_body = request.json
+    uid = req_body['user_id']
+    product_id = req_body['product_id']
+    review_content = req_body['review_content']
+
+    cur = conn.cursor()
+    return {}
+
+
 if __name__ == '__main__':
     app.run(debug=True)
