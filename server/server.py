@@ -14,6 +14,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pymysql
 import simplejson as json
+import random
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -50,8 +52,20 @@ def register():
     # TODO: If username, password all valid, create a new user, insert proper
     # entries to the database
     # Otherwise return some error message or error code
-
+    user_id = random.seed(datetime.now())    
+    cur = conn.cursor()    
+    username_sql = "select * from user where user_name = ", [str(username)]    
+    cur.execute(username_sql)    
+    user_datas = cur.fetchall()       
+    if len(username_sql) == 0:        
+        cur.execute("insert into user(user_name, password, email)"), [str(user_id), str(username), str(password), str(email)]   
+    # else:        
+    #     flash("Username already exist")           
     return {'uid':12345}
+
+
+
+    
 
 @app.route('/login', methods=['POST'])
 def signin():

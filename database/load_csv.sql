@@ -8,7 +8,7 @@ SET GLOBAL local_infile=true;
 USE `boba`;
 
 -- Paste the absolute file path of your `Product` data source here
-LOAD DATA LOCAL INFILE '/Users/breezelv/Downloads/mysql_data_source - Product.csv'
+LOAD DATA LOCAL INFILE 'C:/Users/82426/Downloads/mysql_data_source - Product.csv'
 INTO TABLE PRODUCT
 CHARACTER SET 'utf8'
 FIELDS TERMINATED BY ','
