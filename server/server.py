@@ -10,7 +10,7 @@
 # To create user: run `CREATE USER 'x86'@'localhost' IDENTIFIED BY 'x86x86';` as root
 # To grant privilege: run `GRANT ALL PRIVILEGES ON boba.* TO 'x86'@'localhost';` as root
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect, session, flash
 from flask_cors import CORS
 import pymysql
 import simplejson as json
@@ -41,40 +41,53 @@ def search():
     return dict
 
 @app.route('/register', methods=['POST'])
-def register():
-    req_body = request.json
-    username = req_body['username']
-    password = req_body['password']
-    email = req_body['email']
-    # created_date = ddmmyy
+def register():    
+    if request.method == "POST":      
+        req_body = request.json        
+        username = req_body['username']        
+        password = req_body['password']        
+        email = req_body['email']    
+        # created_date = ddmmyy
 
-    # TODO: If username, password all valid, create a new user, insert proper
-    # entries to the database
-    # Otherwise return some error message or error code
-    user_id = random.seed(datetime.now())    
-    cur = conn.cursor()    
-    username_sql = "select * from user where user_name = ", [str(username)]    
-    cur.execute(username_sql)    
-    user_datas = cur.fetchall()       
-    if len(username_sql) == 0:        
-        cur.execute("insert into user(user_name, password, email)"), [str(user_id), str(username), str(password), str(email)]   
-    # else:        
-    #     flash("Username already exist")           
+        cur = conn.cursor()
+        userid_sql = "select count(*) from user"
+        cur.execute(userid_sql)
+        user_id = cur.fetchall()
+        cur.execute("insert into user(user_id, user_name, password, email) VALUES(%s,%s,%s,%s)", (int(user_id), str(username), str(password), str(email)))
+        # commit to DB
+        # mysql.connection.commit()
+        # close connection
+        # cur.close()
+        # flash("You are now Registered and you can login" , 'success')
+        # redirect(url_for('login'))
+        
     return {'uid':12345}
 
 
-
-    
-
 @app.route('/login', methods=['POST'])
-def signin():
-    req_body = request.json
-    email = req_body['email']
-    password = req_body['password']
-    
-    # TODO: If username, password all valid, log user in
-    # Otherwise return some error message or error code
+def signin():    
+    if request.method == "POST":        
+        req_body = request.json        
+        email = req_body['email']        
+        password = req_body['password']
 
+        cur = conn.cursor()        
+        result = cur.execute("SELECT * FROM users WHERE email = %s" ,[email])
+        if result > 0 :            
+            data = cur.fetchone()            
+            password_db = data['password']            
+            if password == password_db:                
+                session['logged_in'] = True                
+                # session['username'] = username                
+                flash('You are now logged in ','success')
+                # return redirect(url_for('dashboard'))                
+                return {'uid':12345}            
+            else:                
+                flash("Incorrect password")                
+                # return redirect("/login")                
+                return {'uid':12345}
+        else:           
+            error = 'Username not found'    
     return {'uid':12345}
 
 if __name__ == '__main__':
