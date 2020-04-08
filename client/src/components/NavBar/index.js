@@ -13,6 +13,7 @@ function NavBar() {
     font-size: 12px;
 	  font-family: sans-serif;
     background: #2c3e50;
+    position: relative;
   `;
 
   return (
@@ -25,7 +26,7 @@ function NavBar() {
       </div>
 
       <div className='navbar-container'>
-          <nav>
+          <nav id='colorful_nav'>
               <a href="/">Home</a>
               <a href="explore">Explore</a>
               <a href="review">Review</a>

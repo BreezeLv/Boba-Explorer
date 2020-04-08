@@ -1,34 +1,24 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-import { Card, Button, CardGroup } from 'react-bootstrap';
+import { Card, Image, Button } from 'semantic-ui-react';
 
 function SearchResultCard(props) {
     return (
         <>
-            {/* TODO: Render a card display just like Yelp's search result */}
-            {/*<h2>This is Search Result Card for {props.product.product_name ? props.product.product_name : 'Unknown Product'}</h2>*/}
-            <CardGroup>
-                <Card
-                  border = 'light'
-                  bg = 'light'
-                  text = 'secondary'
-                  style={{ width: '18rem' }}
-                  >
-                    {/*<Card.Img variant="top" src="holder.js/100px180" />*/}
-                    <Card.Body>
-                        <Card.Title>
-                            {props.product.product_name ? props.product.product_name : 'Unknown Product'}
-                        </Card.Title>
-                        <Card.Text>
-                            ${props.product.price ? props.product.price : 'Unknown Product'}     {props.product.size ? props.product.size : 'Unknown Product'}
-                        </Card.Text>
-                        <Button variant="primary">Learn More Here!</Button>
-                    </Card.Body>
-                </Card>
-                <br />
-            </CardGroup>
-            <br />
+            <Card>
+                <Image src='/logo192.png' wrapped ui={false} />
+                <Card.Content>
+                    <Card.Header>{props.product.product_name ? props.product.product_name : 'Unknown Product'}</Card.Header>
+                    <Card.Meta>
+                        <span className='date'>{props.product.size ? props.product.size : 'Regular'}</span>
+                    </Card.Meta>
+                    <Card.Description>
+                        ${props.product.price ? props.product.price : 'Unknown Price'}
+                    </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                    <Button>Learn More Here!</Button>
+                </Card.Content>
+            </Card>
         </>
     );
 }

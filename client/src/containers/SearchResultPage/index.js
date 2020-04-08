@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchResultCard from '../../components/SearchResultCard';
-
+import { CardGroup } from 'semantic-ui-react';
+import SearchBar from '../../containers/SearchBar';
 
 function SearchResultPage(props) {
     let searchResult = props.location.state.searchResult;
@@ -10,8 +11,10 @@ function SearchResultPage(props) {
     
     return (
         <div>
-            <h1>THIS IS SEARCH RESULT PAGE</h1>
-            {searchCards}
+            <SearchBar />
+            <CardGroup centered={true}>
+                {searchCards}
+            </CardGroup>
         </div>
     );
 }
