@@ -15,7 +15,9 @@ class LoginPage extends React.Component {
         this.state = {
             username : '',
             email : '',
-            password : ''
+            password : '',
+            caught_error : false,
+            err_msg : ''
         };
     }
 
@@ -46,12 +48,15 @@ class LoginPage extends React.Component {
             body: JSON.stringify(req_data)
         })
         .then((res) => res.json())
-        .then((user) => {
-            if(user && user.email) {
-                // this.props.loadUserProfile(user);
-                this.props.onRouteChange("login");
+        .then((res) => {
+            if(res && res.user_id) {
+                //TODO: Display login state
+                this.setState({caught_error:false, err_msg:''});
             }
-            else console.log("Error" + (isLogin?'Login':'Register') + "Form!");
+            else {
+                let err_msg = res.err_msg ? res.err_msg : '';
+                this.setState({caught_error:true, err_msg:err_msg});
+            }
         })
         .catch(console.log);
     }
@@ -66,6 +71,10 @@ class LoginPage extends React.Component {
 
         return (
             <Bgwrapper>
+                <Message negative hidden={!this.state.caught_error}>
+                    <Message.Header>We're sorry we can't {isLogin ? "Login to" : "Register for"} that account.</Message.Header>
+                    <p>{this.state.err_msg}</p>
+                </Message>
                 <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450 }}>
                     <Header as='h2' color='black' textAlign='center'>
