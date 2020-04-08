@@ -94,7 +94,43 @@ def write_review():
     review_content = req_body['review_content']
 
     cur = conn.cursor()
-    return {}
+    # reviewid_sql = "select count(*) as cnt from REVIEW_FROM_USER where user_id = ;"
+    cur.execute("select count(*) as cnt from REVIEW_FROM_USER where user_id = %s", [uid])
+    review_id = cur.fetchone()['cnt']
+    result = cur.execute("insert into user(review_id, user_id, product_id, review_content) VALUES(%s,%s,%s,%s)", (review_id, str(uid), product_id, str(review_content)))
+    conn.commit()
+    cur.close()
+    return {'review_id' : review_id}
+
+
+@app.route('/update-review', methods=['POST'])
+def update_review():
+    req_body = request.json
+    uid = req_body['user_id']
+    product_id = req_body['product_id']
+    update_review_content = req_body['review_content']
+    review_id = req_body['review_id']
+
+    cur = conn.cursor()
+    cur.execute("update REVIEW_FROM_USER set review_content = %s where review_id = %s and user_id = %s", (update_review_content, review_id, uid))
+    conn.commit()
+    cur.close()
+    return {'review_id' : review_id}
+
+@app.route('/delete-review', methods=['POST'])
+def delete_review():
+    req_body = request.json
+    uid = req_body['user_id']
+    product_id = req_body['product_id']
+    review_id = req_body['review_id']
+
+    cur = conn.cursor()
+    cur.execute("delete from REVIEW_FROM_USER where user_id = %s and review_id = %s", (uid, review_id))
+    conn.commit()
+    cur.close()
+    return {'msg' : 'Comment Delete'}
+
+
 
 
 if __name__ == '__main__':
