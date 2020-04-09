@@ -1,7 +1,8 @@
 import React from 'react';
-import './index.css';
-import * as cons from '../../const';
 import { Redirect } from 'react-router';
+
+import './index.css';
+import {server_addr} from '../../const';
 
 class SearchBar extends React.Component {
 
@@ -21,7 +22,7 @@ class SearchBar extends React.Component {
     onSearch = () => {
         const query_url = 'q='+this.state.searchInput;
 
-        fetch(cons.server_addr+'/search?'+query_url)
+        fetch(server_addr+'/search?'+query_url)
         .then(res => res.json())
         .then((res) => {
             console.log(res)
