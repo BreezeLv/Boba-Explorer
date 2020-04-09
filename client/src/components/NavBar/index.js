@@ -2,6 +2,7 @@ import React from 'react';
 import './index.css';
 import styled from 'styled-components';
 import { Button, Label, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 function NavBar({
   logoutHandler,
@@ -33,11 +34,11 @@ function NavBar({
 
       <div className='navbar-container'>
           <nav id='colorful_nav'>
-              <a href="/">Home</a>
-              <a href="explore">Explore</a>
-              <a href="review">Review</a>
-              <a href="community">Community</a>
-              <a href="contact">Contact</a>
+              <Link to="/">Home</Link>
+              <Link to="explore">Explore</Link>
+              <Link to="review">Review</Link>
+              <Link to="community">Community</Link>
+              <Link to="contact">Contact</Link>
               <div className="animation"></div>
           </nav>
       </div>
