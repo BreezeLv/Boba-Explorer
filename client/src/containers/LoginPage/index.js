@@ -97,30 +97,30 @@ class LoginPage extends React.Component {
                 </Message>
                 <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450 }}>
-                    <Header as='h2' color='black' textAlign='center'>
-                        <Image src='/logo192.png' /> {header}
-                    </Header>
-                    <Form size='large' action={server_addr+'/'+(isLogin?'login':'register')} method='POST' onSubmit={this.FormSubmitHandler}>
-                        <Segment stacked>
-                        {!isLogin ? <Form.Input name='username' fluid icon='address card' iconPosition='left' placeholder='Username' value={this.state.username} onChange={this.InputChangeHandler}/> : null}
-                        <Form.Input name='email' fluid icon='user' iconPosition='left' placeholder='E-mail address' value={this.state.email} onChange={this.InputChangeHandler}/>
-                        <Form.Input
-                            name='password'
-                            fluid
-                            icon='lock'
-                            iconPosition='left'
-                            placeholder='Password'
-                            type='password'
-                            value={this.state.password}
-                            onChange={this.InputChangeHandler}
-                        />
+                        <Header as='h2' color='black' textAlign='center'>
+                            <Image src='/logo192.png' /> {header}
+                        </Header>
+                        <Form size='large' action={server_addr+'/'+(isLogin?'login':'register')} method='POST' onSubmit={this.FormSubmitHandler}>
+                            <Segment stacked>
+                            {!isLogin ? <Form.Input name='username' fluid icon='address card' iconPosition='left' placeholder='Username' value={this.state.username} onChange={this.InputChangeHandler}/> : null}
+                            <Form.Input name='email' fluid icon='user' iconPosition='left' placeholder='E-mail address' value={this.state.email} onChange={this.InputChangeHandler}/>
+                            <Form.Input
+                                name='password'
+                                fluid
+                                icon='lock'
+                                iconPosition='left'
+                                placeholder='Password'
+                                type='password'
+                                value={this.state.password}
+                                onChange={this.InputChangeHandler}
+                            />
 
-                        <Button color='teal' fluid size='large'>
-                            {isLogin ? 'Login' : 'Register'}
-                        </Button>
-                        </Segment>
-                    </Form>
-                    {message}
+                            <Button color='teal' fluid size='large'>
+                                {isLogin ? 'Login' : 'Register'}
+                            </Button>
+                            </Segment>
+                        </Form>
+                        {message}
                     </Grid.Column>
                 </Grid>
             </Bgwrapper>

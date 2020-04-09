@@ -1,24 +1,22 @@
 import React from 'react';
-import { Card, Image, Button } from 'semantic-ui-react';
+import { Button, Item } from 'semantic-ui-react';
 
 function SearchResultCard(props) {
     return (
         <>
-            <Card>
-                <Image src='/logo192.png' wrapped ui={false} />
-                <Card.Content>
-                    <Card.Header>{props.product.product_name ? props.product.product_name : 'Unknown Product'}</Card.Header>
-                    <Card.Meta>
-                        <span className='date'>{props.product.size ? props.product.size : 'Regular'}</span>
-                    </Card.Meta>
-                    <Card.Description>
+            <Item>
+                <Item.Image size='small' src='/logo192.png' />
+
+                <Item.Content verticalAlign='middle'>
+                    <Item.Header>{props.product.product_name ? props.product.product_name : 'Unknown Product'}</Item.Header>
+                    <Item.Meta>{props.product.size ? props.product.size : 'Regular'}</Item.Meta>
+                    <Item.Description>
                         ${props.product.price ? props.product.price : 'Unknown Price'}
-                    </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                    <Button>Learn More Here!</Button>
-                </Card.Content>
-            </Card>
+                    </Item.Description>
+                    <Item.Extra as='a'>From teamoji</Item.Extra>
+                    <Item.Extra><Button color='teal' style={{marginRight:0}}>Write a review</Button></Item.Extra>
+                </Item.Content>
+            </Item>
         </>
     );
 }
