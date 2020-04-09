@@ -1,9 +1,13 @@
 import React from 'react';
 import './index.css';
 import styled from 'styled-components';
-import { Button } from 'semantic-ui-react';
+import { Button, Label, Icon } from 'semantic-ui-react';
 
-function NavBar() {
+function NavBar({
+  logoutHandler,
+  login,
+  userData
+}) {
 
   const FlexContainer = styled.div`
     display: flex;
@@ -15,6 +19,8 @@ function NavBar() {
     background: #2c3e50;
     position: relative;
   `;
+
+  const LoginGadget = login ? (<Label><Icon name='user circle' /> {userData.username} <Label as='a' onClick={logoutHandler}>Logout</Label></Label>) : (<><Button inverted color='blue' href='/login'>Log In</Button> <Button inverted color='olive' href='/register'>Register</Button></>);
 
   return (
     <FlexContainer>
@@ -37,8 +43,7 @@ function NavBar() {
       </div>
 
       <div className='login-container'>
-        <Button inverted color='blue' href='/login'>Log In</Button>
-        <Button inverted color='olive' href='/register'>Register</Button>
+        {LoginGadget}
       </div>
 
     </FlexContainer>

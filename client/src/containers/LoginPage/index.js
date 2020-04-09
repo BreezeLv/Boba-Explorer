@@ -1,7 +1,23 @@
 import React from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+
 import {server_addr} from '../../const';
+import {loginUser} from '../App/actions';
+
+// const mapStateToProps = (state) => {
+//     return {
+//         user : state.user,
+//         userData : state.userData,
+//     }
+// };
+  
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loginUser : user => dispatch(loginUser(user)),
+    };
+};
 
 const Bgwrapper = styled.div`
     background: rgb(236,145,18);
@@ -50,8 +66,11 @@ class LoginPage extends React.Component {
         .then((res) => res.json())
         .then((res) => {
             if(res && res.user_id) {
-                //TODO: Display login state
+                //Update Login status and user data
+                if(!res.username) res.username = 'Unknown User';
+                this.props.loginUser(res);
                 this.setState({caught_error:false, err_msg:''});
+                this.props.history.push('/')
             }
             else {
                 let err_msg = res.err_msg ? res.err_msg : '';
@@ -108,4 +127,4 @@ class LoginPage extends React.Component {
     }
 }
 
-export default LoginPage
+export default connect(null, mapDispatchToProps)(LoginPage)
