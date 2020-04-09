@@ -21,15 +21,17 @@ function NavBar({
     position: relative;
   `;
 
-  const LoginGadget = login ? (<Label><Icon name='user circle' /> {userData.username} <Label as='a' onClick={logoutHandler}>Logout</Label></Label>) : (<><Button inverted color='blue' href='/login'>Log In</Button> <Button inverted color='olive' href='/register'>Register</Button></>);
+  const LoginGadget = login ? 
+  (<Label><Icon name='user circle' /> {userData.username} <Label as='a' onClick={logoutHandler}>Logout</Label></Label>) : 
+  (<><Link to='/login'><Button inverted color='blue'>Log In</Button></Link> <Link to='/register'><Button inverted color='olive'>Register</Button></Link></>);
 
   return (
     <FlexContainer>
 
       <div className='logo-container'>
-        <a href='/'>
+        <Link to='/'>
           <img className='navbar_logo' src='logo192.png' alt='logo'/>
-        </a>
+        </Link>
       </div>
 
       <div className='navbar-container'>

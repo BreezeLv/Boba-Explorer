@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import {server_addr} from '../../const';
 import {loginUser} from '../App/actions';
@@ -85,7 +86,7 @@ class LoginPage extends React.Component {
 
         const header = isLogin ? "Log-in to your account" : "Register an account";
         const message = isLogin ? <Message>
-            New to us? <a href='/register'>Sign Up</a>
+            New to us? <Link to='/register'>Sign Up</Link>
         </Message> : null;
 
         return (
