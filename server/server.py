@@ -116,7 +116,7 @@ def write_review():
     # reviewid_sql = "select count(*) as cnt from REVIEW_FROM_USER where user_id = ;"
     cur.execute("select count(*) as cnt from REVIEW_FROM_USER where user_id = %s", [uid])
     review_id = cur.fetchone()['cnt']
-    result = cur.execute("insert into user(review_id, user_id, product_id, review_content) VALUES(%s,%s,%s,%s)", (review_id, str(uid), product_id, str(review_content)))
+    cur.execute("insert into REVIEW_FROM_USER(review_id, user_id, product_id, review_content) VALUES(%s,%s,%s,%s)", (review_id, str(uid), product_id, str(review_content)))
     conn.commit()
     cur.close()
     return {'review_id' : review_id}
