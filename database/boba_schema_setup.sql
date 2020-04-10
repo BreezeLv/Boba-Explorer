@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `boba`.`searches` (
   `search_time` DATETIME NULL,
   `search_record` VARCHAR(45) NULL,
   `user_id` INT NOT NULL,
-  `product_id` INT NULL,
+  `product_id` INT NOT NULL,
   INDEX `fk_user_id_idx` (`user_id` ASC),
   INDEX `fk_product_id_idx` (`product_id` ASC),
   PRIMARY KEY (`user_id`, `product_id`),

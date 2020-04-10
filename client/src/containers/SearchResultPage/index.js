@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchResultCard from '../../components/SearchResultCard';
-import { CardGroup } from 'semantic-ui-react';
+import { ItemGroup } from 'semantic-ui-react';
 import SearchBar from '../../containers/SearchBar';
 
 function SearchResultPage(props) {
@@ -10,12 +10,12 @@ function SearchResultPage(props) {
     const searchCards = Object.entries(searchResult).map(([k,v])=><SearchResultCard key={k} product={v} />)
     
     return (
-        <div>
+        <>
             <SearchBar />
-            <CardGroup centered={true}>
+            <ItemGroup divided={true} style={{ maxWidth: 500, margin: '1.5em auto' }}>
                 {searchCards}
-            </CardGroup>
-        </div>
+            </ItemGroup>
+        </>
     );
 }
 

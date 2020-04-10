@@ -1,7 +1,24 @@
 import React from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import {server_addr} from '../../const';
+import {loginUser} from '../App/actions';
+
+// const mapStateToProps = (state) => {
+//     return {
+//         user : state.user,
+//         userData : state.userData,
+//     }
+// };
+  
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loginUser : user => dispatch(loginUser(user)),
+    };
+};
 
 const Bgwrapper = styled.div`
     background: rgb(236,145,18);
@@ -50,8 +67,11 @@ class LoginPage extends React.Component {
         .then((res) => res.json())
         .then((res) => {
             if(res && res.user_id) {
-                //TODO: Display login state
+                //Update Login status and user data
+                if(!res.username) res.username = 'Unknown User';
+                this.props.loginUser(res);
                 this.setState({caught_error:false, err_msg:''});
+                this.props.history.push('/')
             }
             else {
                 let err_msg = res.err_msg ? res.err_msg : '';
@@ -66,7 +86,7 @@ class LoginPage extends React.Component {
 
         const header = isLogin ? "Log-in to your account" : "Register an account";
         const message = isLogin ? <Message>
-            New to us? <a href='/register'>Sign Up</a>
+            New to us? <Link to='/register'>Sign Up</Link>
         </Message> : null;
 
         return (
@@ -77,30 +97,30 @@ class LoginPage extends React.Component {
                 </Message>
                 <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450 }}>
-                    <Header as='h2' color='black' textAlign='center'>
-                        <Image src='/logo192.png' /> {header}
-                    </Header>
-                    <Form size='large' action={server_addr+'/'+(isLogin?'login':'register')} method='POST' onSubmit={this.FormSubmitHandler}>
-                        <Segment stacked>
-                        {!isLogin ? <Form.Input name='username' fluid icon='address card' iconPosition='left' placeholder='Username' value={this.state.username} onChange={this.InputChangeHandler}/> : null}
-                        <Form.Input name='email' fluid icon='user' iconPosition='left' placeholder='E-mail address' value={this.state.email} onChange={this.InputChangeHandler}/>
-                        <Form.Input
-                            name='password'
-                            fluid
-                            icon='lock'
-                            iconPosition='left'
-                            placeholder='Password'
-                            type='password'
-                            value={this.state.password}
-                            onChange={this.InputChangeHandler}
-                        />
+                        <Header as='h2' color='black' textAlign='center'>
+                            <Image src='/logo192.png' /> {header}
+                        </Header>
+                        <Form size='large' action={server_addr+'/'+(isLogin?'login':'register')} method='POST' onSubmit={this.FormSubmitHandler}>
+                            <Segment stacked>
+                            {!isLogin ? <Form.Input name='username' fluid icon='address card' iconPosition='left' placeholder='Username' value={this.state.username} onChange={this.InputChangeHandler}/> : null}
+                            <Form.Input name='email' fluid icon='user' iconPosition='left' placeholder='E-mail address' value={this.state.email} onChange={this.InputChangeHandler}/>
+                            <Form.Input
+                                name='password'
+                                fluid
+                                icon='lock'
+                                iconPosition='left'
+                                placeholder='Password'
+                                type='password'
+                                value={this.state.password}
+                                onChange={this.InputChangeHandler}
+                            />
 
-                        <Button color='teal' fluid size='large'>
-                            {isLogin ? 'Login' : 'Register'}
-                        </Button>
-                        </Segment>
-                    </Form>
-                    {message}
+                            <Button color='teal' fluid size='large'>
+                                {isLogin ? 'Login' : 'Register'}
+                            </Button>
+                            </Segment>
+                        </Form>
+                        {message}
                     </Grid.Column>
                 </Grid>
             </Bgwrapper>
@@ -108,4 +128,4 @@ class LoginPage extends React.Component {
     }
 }
 
-export default LoginPage
+export default connect(null, mapDispatchToProps)(LoginPage)

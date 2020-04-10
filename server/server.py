@@ -16,6 +16,19 @@ import pymysql
 import simplejson as json
 import random
 from datetime import datetime
+from pymysql.err import (
+    Warning as Warning,
+    Error as Error,
+    InterfaceError as InterfaceError,
+    DataError as DataError,
+    DatabaseError as DatabaseError,
+    OperationalError as OperationalError,
+    IntegrityError as IntegrityError,
+    InternalError as InternalError,
+    NotSupportedError as NotSupportedError,
+    ProgrammingError as ProgrammingError,
+    MySQLError as MySQLError,
+)
 
 app = Flask(__name__)
 CORS(app)
@@ -48,18 +61,24 @@ def register():
     email = req_body['email']
     # created_date = ddmmyy
 
-    cur = conn.cursor()
-    userid_sql = "select count(*) as cnt from user;"
-    cur.execute(userid_sql)
-    user_id = cur.fetchone()['cnt']
-    result = cur.execute("insert into user(user_id, user_name, password, email) VALUES(%s,%s,%s,%s)", (int(user_id), str(username), str(password), str(email)))
-    # commit to DB
-    conn.commit()
-    # close connection
-    cur.close()
+    try:
+        cur = conn.cursor()
+        userid_sql = "select count(*) as cnt from user;"
+        cur.execute(userid_sql)
+        user_id = cur.fetchone()['cnt']
+        cur.execute("insert into user(user_id, user_name, password, email) VALUES(%s,%s,%s,%s)", (int(user_id), str(username), str(password), str(email)))
+        # commit to DB
+        conn.commit()
+        # close connection
+        cur.close()
 
-    if result: return {'user_id':user_id}
-    else: return {'err_msg':'Unable to register the user!'}
+        return {'user_id':user_id}
+    except InterfaceError:
+        return {'err_msg':'Unable to register the user! --- Interface Error'}
+    except DatabaseError:
+        return {'err_msg':'Unable to register the user! --- Database Error'}
+    except:
+        return {'err_msg':'Unable to register the user!'}
 
 
 @app.route('/login', methods=['POST'])
@@ -101,6 +120,7 @@ def write_review():
     result = cur.execute("insert into user(user_id, product_id, review_content) VALUES(%s,%s,%s)", (str(uid), product_id, str(review_content)))
     cur.execute("select review_id as cnt from REVIEW_FROM_USER where user_id = %s and review_content = %s", (str(uid), review_content))
     review_id = cur.fetchone()['cnt']
+    cur.execute("insert into REVIEW_FROM_USER(review_id, user_id, product_id, review_content) VALUES(%s,%s,%s,%s)", (review_id, str(uid), product_id, str(review_content)))
     conn.commit()
     cur.close()
     return {'review_id' : review_id}
