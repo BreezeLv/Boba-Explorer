@@ -162,22 +162,20 @@ def fetch_review_user():
     review_list = []
     for i in datas:
         review_list.append(i)
-    return {'all_review_user' : review_list}
+    return {'reviews' : review_list}
 
-@app.route('/fetch-review', methods=['POST'])
+@app.route('/fetch-review', methods=['GET','POST'])
 def fetch_review():
-    req_body = request.json
-
 
     cur = conn.cursor()
-    sql = cur.execute("SELECT distinct(review_content) FROM REVIEW_FROM_USER")
-    cur.execute(sql)
+    cur.execute("SELECT distinct(review_content) FROM REVIEW_FROM_USER")
     datas = cur.fetchall()
+    print(datas)
 
-    review_list = []
-    for i in datas:
-        review_list.append(i)
-    return {'all_review' : review_list}
+    # review_list = []
+    # for i in datas:
+    #     review_list.append(i)
+    return {'reviews' : datas}
  
 
 

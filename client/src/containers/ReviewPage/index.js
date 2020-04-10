@@ -13,7 +13,7 @@ const key = 'review';
 function ReviewPage({
     loading,
     error,
-    review,
+    reviews,
     show_only_curr_user,
     fetchReviews
 }) {
@@ -21,13 +21,13 @@ function ReviewPage({
 
     useEffect(() => {
         fetchReviews();
-    }, []);
+    }, [fetchReviews]);
 
-    const reviewItems = !review?[]:review.map((elem, idx)=><ReviewItem key={'review'+toString(idx)} review={elem} />)
+const reviewItems = reviews.map((elem, idx)=>{console.log(elem);return <ReviewItem key={elem.review_content || idx} review={elem} />})
 
     return (
         <>
-            <ItemGroup divided={true} style={{ maxWidth: 500, margin: '1.5em auto' }}>
+            <ItemGroup divided={true} style={{ maxWidth: 400, margin: '1.5em auto' }}>
                 {reviewItems}
             </ItemGroup>
         </>
@@ -35,10 +35,11 @@ function ReviewPage({
 }
 
 const mapStateToProps = (state) => {
+    console.log(state)
     return {
         loading : state.review ? state.review.loading : initialState.loading,
         error : state.review ? state.review.error : initialState.error,
-        review : state.review ? state.review.review : initialState.review,
+        reviews : state.review ? state.review.reviews : initialState.reviews,
         show_only_curr_user : state.review ? state.review.show_only_curr_user : initialState.show_only_curr_user,
     }
 };
