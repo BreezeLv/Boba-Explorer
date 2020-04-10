@@ -113,8 +113,7 @@ def write_review():
     review_content = req_body['review_content']
 
     cur = conn.cursor()
-    # reviewid_sql = "select count(*) as cnt from REVIEW_FROM_USER where user_id = ;"
-    cur.execute("select count(*) as cnt from REVIEW_FROM_USER where user_id = %s", [uid])
+    cur.execute("select count(*) as cnt from REVIEW_FROM_USER")
     review_id = cur.fetchone()['cnt']
     cur.execute("insert into REVIEW_FROM_USER(review_id, user_id, product_id, review_content) VALUES(%s,%s,%s,%s)", (review_id, str(uid), product_id, str(review_content)))
     conn.commit()
@@ -168,15 +167,11 @@ def fetch_review_user():
 def fetch_review():
 
     cur = conn.cursor()
-    cur.execute("SELECT distinct(review_content) FROM REVIEW_FROM_USER")
+    cur.execute("SELECT * FROM REVIEW_FROM_USER")
     datas = cur.fetchall()
-    print(datas)
+    # print(datas)
 
-    # review_list = []
-    # for i in datas:
-    #     review_list.append(i)
     return {'reviews' : datas}
- 
 
 
 if __name__ == '__main__':

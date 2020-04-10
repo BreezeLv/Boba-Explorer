@@ -106,7 +106,7 @@ class SearchResultCard extends React.Component {
                         
                     </Item.Content>
                 </Item>
-                <Modal basic size='tiny' closeIcon='cross' open={!this.state.showModal} onClose={()=>{this.setState({showModal:true})}}>
+                <Modal basic size='tiny' closeIcon open={!this.state.showModal} onClose={()=>{this.setState({showModal:true})}}>
                     <Header icon='exclamation' content='Important  Note' />
                     <Modal.Content>You need to Login/Register first to write a review</Modal.Content>
                 </Modal>

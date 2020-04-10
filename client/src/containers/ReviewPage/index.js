@@ -25,7 +25,11 @@ function ReviewPage({
         fetchReviews();
     }, [fetchReviews]);
 
-    const reviewItems = reviews.map((elem, idx)=>{console.log(elem);return <ReviewItem key={elem.review_content || idx} review={elem} />})
+    const reviewItemFactory = (elem, idx) => (<ReviewItem key={elem.review_content || idx} review={elem} />);
+    const reviewItems = reviews.map(reviewItemFactory);
+    const filterItems = user ? reviews.filter((elem) => elem.user_id == user).map(reviewItemFactory) : [];
+
+    const displayItems = activeItem === 'my reviews' ? filterItems : reviewItems;
 
     return (
         <>
@@ -38,11 +42,12 @@ function ReviewPage({
                 <Menu.Item
                     name='my reviews'
                     active={activeItem === 'my reviews'}
+                    disabled={!user}
                     onClick={changeDisplayMode}
                 />
             </Menu>
             <ItemGroup divided={true} style={{ maxWidth: 400, margin: '1.5em auto' }}>
-                {reviewItems}
+                {displayItems}
             </ItemGroup>
         </>
     );
