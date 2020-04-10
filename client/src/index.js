@@ -7,7 +7,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import './index.css';
 import App from './containers/App/App';
 import configureStore from './configureStore';
-import history from './history';
+import history from './utils/history';
 
 const store = configureStore({}, history);
 

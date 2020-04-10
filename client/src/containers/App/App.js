@@ -7,6 +7,7 @@ import './App.css';
 import HomePage from '../HomePage';
 import LoginPage from '../LoginPage';
 import SearchResultPage from '../SearchResultPage';
+import ReviewPage from '../ReviewPage';
 import Footer from '../../components/Footer';
 import NavBar from '../../components/NavBar';
 import {logoutUser} from './actions';
@@ -51,6 +52,7 @@ function App({
         <Route exact path="/login" render={(props) => <LoginPage {...props} isLogin={true} />} />
         <Route exact path="/register" render={(props) => <LoginPage {...props} isLogin={false} />} />
         <Route path="/search" component={SearchResultPage} />
+        <Route path="/review" component={ReviewPage} />
         <Route path="" component={HomePage} />
       </Switch>
       
