@@ -95,9 +95,10 @@ def write_review():
 
     cur = conn.cursor()
     # reviewid_sql = "select count(*) as cnt from REVIEW_FROM_USER where user_id = ;"
-    cur.execute("select count(*) as cnt from REVIEW_FROM_USER where user_id = %s", [uid])
-    review_id = cur.fetchone()['cnt']
-    result = cur.execute("insert into user(review_id, user_id, product_id, review_content) VALUES(%s,%s,%s,%s)", (review_id, str(uid), product_id, str(review_content)))
+    # cur.execute("select count(*) as cnt from REVIEW_FROM_USER where user_id = %s", [uid])
+    # review_id = cur.fetchone()['cnt']
+    # result = cur.execute("insert into user(review_id, user_id, product_id, review_content) VALUES(%s,%s,%s,%s)", (review_id, str(uid), product_id, str(review_content)))
+    result = cur.execute("insert into user(user_id, product_id, review_content) VALUES(%s,%s,%s)", (str(uid), product_id, str(review_content)))
     conn.commit()
     cur.close()
     return {'review_id' : review_id}
@@ -130,7 +131,36 @@ def delete_review():
     cur.close()
     return {'msg' : 'Comment Delete'}
 
+@app.route('/fetch-review-user', methods=['POST'])
+def fetch_review_user():
+    req_body = request.json
+    uid = req_body['user_id']
 
+    cur = conn.cursor()
+    sql = cur.execute("SELECT review_content FROM REVIEW_FROM_USER WHERE user_id = %s" ,(str(uid)))
+    cur.execute(sql)
+    datas = cur.fetchall()
+
+    review_list = []
+    for i in datas:
+        review_list.append(i)
+    return {'all_review_user' : review_list}
+
+@app.route('/fetch-review', methods=['POST'])
+def fetch_review():
+    req_body = request.json
+
+
+    cur = conn.cursor()
+    sql = cur.execute("SELECT distinct(review_content) FROM REVIEW_FROM_USER")
+    cur.execute(sql)
+    datas = cur.fetchall()
+
+    review_list = []
+    for i in datas:
+        review_list.append(i)
+    return {'all_review' : review_list}
+ 
 
 
 if __name__ == '__main__':
