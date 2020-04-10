@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `boba`.`REVIEW_FROM_USER` (
   `review_id` INT NOT NULL,
   `review_Date` DATETIME NULL,
   `review_content` VARCHAR(200) NULL,
-  `product_id` INT NULL,
+  `product_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`review_id`),
   INDEX `fk_user_id_idx` (`user_id` ASC),
