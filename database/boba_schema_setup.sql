@@ -56,7 +56,7 @@ ENGINE = InnoDB;
 -- Table `boba`.`REVIEW_FROM_USER`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `boba`.`REVIEW_FROM_USER` (
-  `review_id` INT NOT NULL AUTO_INCREMENT,
+  `review_id` INT NOT NULL,
   `review_Date` DATETIME NULL,
   `review_content` VARCHAR(200) NULL,
   `product_id` INT NOT NULL,
