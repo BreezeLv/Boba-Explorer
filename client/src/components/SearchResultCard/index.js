@@ -94,7 +94,7 @@ class SearchResultCard extends React.Component {
                             {this.state.commentVisible && (
                                 <div>
                                     <Item.Extra>
-                                        <TextArea placeholder='Leave something..' onChange={this.onChangeTextArea}></TextArea>
+                                        <TextArea placeholder='Leave some comments..' onChange={this.onChangeTextArea}></TextArea>
                                     </Item.Extra>
                                     <Item.Extra>
                                         <Button color='red' onClick={this.onCancelComment} >Cancel</Button>

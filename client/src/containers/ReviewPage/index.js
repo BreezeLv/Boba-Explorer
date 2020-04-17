@@ -27,7 +27,7 @@ function ReviewPage({
 
     const reviewItemFactory = (elem, idx) => (<ReviewItem key={elem.review_content || idx} review={elem} />);
     const reviewItems = reviews.map(reviewItemFactory);
-    const filterItems = user ? reviews.filter((elem) => elem.user_id == user).map(reviewItemFactory) : [];
+    const filterItems = user ? reviews.filter((elem) => elem.user_id === user).map(reviewItemFactory) : [];
 
     const displayItems = activeItem === 'my reviews' ? filterItems : reviewItems;
 
