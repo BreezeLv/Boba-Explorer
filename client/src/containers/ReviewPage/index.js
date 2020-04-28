@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { ItemGroup, Menu } from 'semantic-ui-react';
 
 import { useInjectReducer } from '../../utils/injectReducer';
-import { fetchReviews, changeDisplayMode, updateReview } from './actions';
+import { fetchReviews, changeDisplayMode, updateReview, deleteReview } from './actions';
 import reducer, { initialState } from './reducer';
 import ReviewItem from '../../components/ReviewItem';
 
@@ -18,7 +18,8 @@ function ReviewPage({
     user,
     fetchReviews,
     changeDisplayMode,
-    updateReview
+    updateReview,
+    deleteReview
 }) {
     useInjectReducer({ key, reducer });
 
@@ -26,7 +27,7 @@ function ReviewPage({
         fetchReviews();
     }, [fetchReviews]);
 
-    const reviewItemFactory = (elem, idx) => (<ReviewItem key={elem.review_content || idx} review={elem} myReview={activeItem === 'my reviews'} updateReview={updateReview}/>);
+    const reviewItemFactory = (elem, idx) => (<ReviewItem key={elem.review_content || idx} review={elem} myReview={activeItem === 'my reviews'} updateReview={updateReview} deleteReview={deleteReview}/>);
     const reviewItems = reviews.map(reviewItemFactory);
     const filterItems = user ? reviews.filter((elem) => elem.user_id === user).map(reviewItemFactory) : [];
 
@@ -68,7 +69,8 @@ export function mapDispatchToProps(dispatch) {
     return {
         fetchReviews: () => dispatch(fetchReviews()),
         changeDisplayMode: (e,{name}) => dispatch(changeDisplayMode(name)),
-        updateReview: (review_id,review_content) => dispatch(updateReview(review_id,review_content))
+        updateReview: (review_id,review_content) => dispatch(updateReview(review_id,review_content)),
+        deleteReview: (review_id) => dispatch(deleteReview(review_id))
     };
 }
 

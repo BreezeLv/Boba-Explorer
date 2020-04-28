@@ -1,5 +1,5 @@
 import produce from 'immer';
-import {FETCH_REVIEWS_PENDING, FETCH_REVIEWS_SUCCESS, FETCH_REVIEWS_FAIL, CHANGE_DISPLAY_MODE, UPDATE_REVIEW_PENDING, UPDATE_REVIEW_SUCCESS} from './constants';
+import {FETCH_REVIEWS_PENDING, FETCH_REVIEWS_SUCCESS, FETCH_REVIEWS_FAIL, CHANGE_DISPLAY_MODE, UPDATE_REVIEW_PENDING, UPDATE_REVIEW_SUCCESS, DELETE_REVIEW_SUCCESS} from './constants';
 
 // The initial state of the Review
 export const initialState = {
@@ -44,6 +44,13 @@ const reviewReducer = (state = initialState, action) =>
                 draft.error = false;
                 const updated = draft.reviews.find((elem)=>elem.review_id===action.payload.review_id);
                 if(updated) updated.review_content = action.payload.review_content;
+                break;
+
+            case DELETE_REVIEW_SUCCESS:
+                draft.loading = false;
+                draft.error = false;
+                const deletedIdx = draft.reviews.findIndex((elem)=>elem.review_id===action.payload.review_id);
+                if(deletedIdx > -1) draft.reviews.splice(deletedIdx,1);
                 break;
 
             default:

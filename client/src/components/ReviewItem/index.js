@@ -17,7 +17,8 @@ class ReviewItem extends React.Component {
     }
     
     OnDelete = () => {
-    
+        const {deleteReview, review} = this.props;
+        deleteReview(review.review_id)
     }
     
     onChangeTextArea = (e) => {

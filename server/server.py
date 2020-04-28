@@ -145,15 +145,22 @@ def update_review():
 @app.route('/delete-review', methods=['POST'])
 def delete_review():
     req_body = request.json
-    uid = req_body['user_id']
-    product_id = req_body['product_id']
+    # uid = req_body['user_id']
+    # product_id = req_body['product_id']
     review_id = req_body['review_id']
 
-    cur = conn.cursor()
-    cur.execute("delete from REVIEW_FROM_USER where user_id = %s and review_id = %s", (uid, review_id))
-    conn.commit()
-    cur.close()
-    return {'msg' : 'Comment Delete'}
+    try:
+        cur = conn.cursor()
+        cur.execute("delete from REVIEW_FROM_USER where review_id = %s", (review_id))
+        conn.commit()
+        cur.close()
+        return {'review_id':review_id}
+    except InterfaceError:
+        return {'err_msg':'Unable to delete the review! --- Interface Error'}
+    except DatabaseError:
+        return {'err_msg':'Unable to delete the review! --- Database Error'}
+    except:
+        return {'err_msg':'Unable to delete the review!'}
 
 @app.route('/fetch-review-user', methods=['POST'])
 def fetch_review_user():
