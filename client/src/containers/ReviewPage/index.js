@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { ItemGroup, Menu } from 'semantic-ui-react';
 
 import { useInjectReducer } from '../../utils/injectReducer';
-import { fetchReviews, changeDisplayMode } from './actions';
+import { fetchReviews, changeDisplayMode, updateReview } from './actions';
 import reducer, { initialState } from './reducer';
 import ReviewItem from '../../components/ReviewItem';
 
@@ -17,7 +17,8 @@ function ReviewPage({
     activeItem,
     user,
     fetchReviews,
-    changeDisplayMode
+    changeDisplayMode,
+    updateReview
 }) {
     useInjectReducer({ key, reducer });
 
@@ -25,7 +26,7 @@ function ReviewPage({
         fetchReviews();
     }, [fetchReviews]);
 
-    const reviewItemFactory = (elem, idx) => (<ReviewItem key={elem.review_content || idx} review={elem} myReview={activeItem === 'my reviews'}/>);
+    const reviewItemFactory = (elem, idx) => (<ReviewItem key={elem.review_content || idx} review={elem} myReview={activeItem === 'my reviews'} updateReview={updateReview}/>);
     const reviewItems = reviews.map(reviewItemFactory);
     const filterItems = user ? reviews.filter((elem) => elem.user_id === user).map(reviewItemFactory) : [];
 
@@ -54,7 +55,6 @@ function ReviewPage({
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         loading : state.review ? state.review.loading : initialState.loading,
         error : state.review ? state.review.error : initialState.error,
@@ -67,7 +67,8 @@ const mapStateToProps = (state) => {
 export function mapDispatchToProps(dispatch) {
     return {
         fetchReviews: () => dispatch(fetchReviews()),
-        changeDisplayMode: (e,{name}) => dispatch(changeDisplayMode(name))
+        changeDisplayMode: (e,{name}) => dispatch(changeDisplayMode(name)),
+        updateReview: (review_id,review_content) => dispatch(updateReview(review_id,review_content))
     };
 }
 

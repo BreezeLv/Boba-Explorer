@@ -30,6 +30,9 @@ class ReviewItem extends React.Component {
     
     onUpdateEdit = () => {
         this.setState({commentVisible:false});
+
+        const {review} = this.props;
+        this.props.updateReview(review.review_id,this.state.comment)
     }
 
     render() {

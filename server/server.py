@@ -124,16 +124,23 @@ def write_review():
 @app.route('/update-review', methods=['POST'])
 def update_review():
     req_body = request.json
-    uid = req_body['user_id']
-    product_id = req_body['product_id']
+    # uid = req_body['user_id']
+    # product_id = req_body['product_id']
     update_review_content = req_body['review_content']
     review_id = req_body['review_id']
 
-    cur = conn.cursor()
-    cur.execute("update REVIEW_FROM_USER set review_content = %s where review_id = %s and user_id = %s", (update_review_content, review_id, uid))
-    conn.commit()
-    cur.close()
-    return {'review_id' : review_id}
+    try:
+        cur = conn.cursor()
+        cur.execute("update REVIEW_FROM_USER set review_content = %s where review_id = %s", (update_review_content, review_id))
+        conn.commit()
+        cur.close()
+        return {'review_id':review_id, 'review_content':update_review_content}
+    except InterfaceError:
+        return {'err_msg':'Unable to update the review! --- Interface Error'}
+    except DatabaseError:
+        return {'err_msg':'Unable to update the review! --- Database Error'}
+    except:
+        return {'err_msg':'Unable to update the review!'}
 
 @app.route('/delete-review', methods=['POST'])
 def delete_review():
