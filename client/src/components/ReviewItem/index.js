@@ -64,12 +64,14 @@ class ReviewItem extends React.Component {
                             {this.state.commentVisible && editTextarea}
                         </Item.Content>
     
-                        <Dropdown disabled={this.state.commentVisible}>
-                            <Dropdown.Menu>
-                                <Dropdown.Item text='Edit' onClick={this.OnEdit} />
-                                <Dropdown.Item text='Delete' onClick={this.OnDelete} />
-                            </Dropdown.Menu>
-                        </Dropdown>
+                        {this.props.myReview && (
+                            <Dropdown disabled={this.state.commentVisible} >
+                                <Dropdown.Menu>
+                                    <Dropdown.Item text='Edit' onClick={this.OnEdit} />
+                                    <Dropdown.Item text='Delete' onClick={this.OnDelete} />
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        )}
                     </Item>
             </>
         );
