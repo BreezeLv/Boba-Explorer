@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-import A from '../A';
+import { Link } from 'react-router-dom';
 
 import Wrapper from './Wrapper';
 import styled from 'styled-components';
@@ -31,13 +31,13 @@ function Footer() {
         <Container>
             <ul className='footer-ul'>
                 <li>
-                    <A href="./about">About us</A>
+                    <Link to="./about">About us</Link>
                 </li>
                 <li>
-                    <A href="./help">Help</A>
+                    <Link to="./help">Help</Link>
                 </li>
                 <li>
-                    <A href="./contact">Contact</A>
+                    <Link to="./contact">Contact</Link>
                 </li>
             </ul>
             <Separator />

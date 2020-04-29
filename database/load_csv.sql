@@ -7,13 +7,21 @@ SET GLOBAL local_infile=true;
 
 USE `boba`;
 
--- Paste the absolute file path of your `Product` data source here
-LOAD DATA LOCAL INFILE '/Users/breezelv/Downloads/mysql_data_source - Product.csv'
-INTO TABLE PRODUCT
-CHARACTER SET 'utf8'
+-- load data for Store table
+LOAD DATA LOCAL INFILE '/Users/breezelv/Downloads/mysql_data_source - Store.csv'
+INTO TABLE STORE
+CHARACTER SET 'UTF8MB4'
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
--- TODO: `LOAD DATA` query for other tables..
+-- load data for Product table
+-- Paste the absolute file path of your `Product` data source here
+LOAD DATA LOCAL INFILE '/Users/breezelv/Downloads/mysql_data_source - Product.csv'
+INTO TABLE PRODUCT
+CHARACTER SET 'UTF8MB4'
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
