@@ -35,7 +35,13 @@ CREATE TABLE IF NOT EXISTS `boba`.`PRODUCT` (
   `product_name` VARCHAR(45) NULL,
   `size` VARCHAR(45) NULL,
   `price` DECIMAL(4,2) NULL,
-  PRIMARY KEY (`product_id`))
+  `store_id` INT NOT NULL,
+  PRIMARY KEY (`product_id`),
+  CONSTRAINT `fk_store_id`
+    FOREIGN KEY (`store_id`)
+    REFERENCES `boba`.`STORE` (`store_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -44,10 +50,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `boba`.`STORE` (
   `store_id` INT NOT NULL,
-  `operation_time` VARCHAR(45) NULL,
-  `location` VARCHAR(45) NULL,
-  `ratings` FLOAT NULL,
   `store_name` VARCHAR(45) NULL,
+  `operation_time` VARCHAR(45) NULL,
+  `ratings` FLOAT NULL,
+  `location` TEXT NULL,
   PRIMARY KEY (`store_id`))
 ENGINE = InnoDB;
 
