@@ -53,7 +53,8 @@ CREATE TABLE IF NOT EXISTS `boba`.`STORE` (
   `store_name` VARCHAR(45) NULL,
   `operation_time` VARCHAR(45) NULL,
   `ratings` FLOAT NULL,
-  `location` TEXT NULL,
+  `location` VARCHAR(50) NULL,
+  `store_cover_url` VARCHAR(200) NULL,
   PRIMARY KEY (`store_id`))
 ENGINE = InnoDB;
 

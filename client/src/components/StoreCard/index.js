@@ -5,12 +5,12 @@ function StoreCard({
     store
 }) {
 
-    const {store_name,operation_time,ratings,location} = store;
+    const {store_name,operation_time,ratings,location,store_cover_url} = store;
 
     return (
         <>
             <Item style={{maxWidth:450}}>
-                <Item.Image size='small' src='/logo192.png' />
+                <Item.Image size='small' src={store_cover_url} />
 
                 <Item.Content verticalAlign='middle'>
                     <Item.Header>{store_name ? store_name : 'Unknown Store'}</Item.Header>
