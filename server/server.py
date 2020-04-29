@@ -187,6 +187,20 @@ def fetch_review():
 
     return {'reviews' : datas}
 
+@app.route('/fetch-stores', methods=['GET'])
+def fetch_stores():
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM STORE")
+        data = cur.fetchall()
+
+        return {'stores' : data}
+    except InterfaceError:
+        return {'err_msg':'Unable to fetch stores! --- Interface Error'}
+    except DatabaseError:
+        return {'err_msg':'Unable to fetch stores! --- Database Error'}
+    except:
+        return {'err_msg':'Unable to fetch stores!'}
 
 if __name__ == '__main__':
     app.run(debug=True)
