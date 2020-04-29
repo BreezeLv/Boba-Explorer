@@ -1,7 +1,8 @@
 import React from 'react';
-import { ItemGroup, CardGroup } from 'semantic-ui-react';
+import { ItemGroup } from 'semantic-ui-react';
 
 import {server_addr} from '../../const';
+import StoreCard from '../../components/StoreCard';
 
 class ExplorePage extends React.Component {
 
@@ -16,7 +17,6 @@ class ExplorePage extends React.Component {
         fetch(server_addr+'/fetch-stores')
         .then(res => res.json())
         .then((res) => {
-            console.log(res)
             this.setState({stores:res.stores});
         })
         .catch(console.log)
@@ -24,14 +24,15 @@ class ExplorePage extends React.Component {
 
     render() {
     
-        const storeCards = this.state.map((store)=><StoreCard key={store.store_id} store={store} />);
+        const storeCards = this.state.stores ? this.state.stores.map((store)=><StoreCard key={store.store_id} store={store} />) : [];
         
         return (
-            <>
-                <CardGroup style={{ maxWidth: 500, margin: '1.5em auto' }}>
-                    {storeCards}
-                </CardGroup>
-            </>
+            <ItemGroup style={{
+                maxWidth: 1000, margin: '1.5em auto',
+                display:'flex', justifyContent:'space-evenly', flexWrap: 'wrap'
+            }}>
+                {storeCards}
+            </ItemGroup>
         );
     }
 }
