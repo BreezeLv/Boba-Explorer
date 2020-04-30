@@ -37,10 +37,10 @@ function NavBar({
       <div className='navbar-container'>
           <nav id='colorful_nav'>
               <Link to="/">Home</Link>
-              <Link to="explore">Explore</Link>
-              <Link to="review">Review</Link>
-              <Link to="community">Community</Link>
-              <Link to="contact">Contact</Link>
+              <Link to="/explore">Explore</Link>
+              <Link to="/review">Review</Link>
+              <Link to="/community">Community</Link>
+              <Link to="/contact">Contact</Link>
               <div className="animation"></div>
           </nav>
       </div>

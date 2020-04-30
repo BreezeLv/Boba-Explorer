@@ -27,7 +27,7 @@ class ExplorePage extends React.Component {
         const storeCards = this.state.stores ? this.state.stores.map((store)=><StoreCard key={store.store_id} store={store} />) : [];
         
         return (
-            <ItemGroup style={{
+            <ItemGroup link style={{
                 maxWidth: 1000, margin: '1.5em auto',
                 display:'flex', justifyContent:'space-evenly', flexWrap: 'wrap'
             }}>

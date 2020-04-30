@@ -9,6 +9,7 @@ import LoginPage from '../LoginPage';
 import SearchResultPage from '../SearchResultPage';
 import ReviewPage from '../ReviewPage';
 import ExplorePage from '../ExplorePage';
+import StorePage from '../StorePage';
 import Footer from '../../components/Footer';
 import NavBar from '../../components/NavBar';
 import {logoutUser} from './actions';
@@ -55,6 +56,7 @@ function App({
         <Route path="/search" component={SearchResultPage} />
         <Route path="/review" component={ReviewPage} />
         <Route path="/explore" component={ExplorePage} />
+        <Route path="/stores/:store_id" component={StorePage} />
         <Route path="" component={HomePage} />
       </Switch>
       

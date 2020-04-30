@@ -183,10 +183,12 @@ def fetch_review():
     cur = conn.cursor()
     cur.execute("SELECT * FROM REVIEW_FROM_USER")
     datas = cur.fetchall()
-    # print(datas)
 
     return {'reviews' : datas}
 
+"""
+    Fetch all stores
+"""
 @app.route('/fetch-stores', methods=['GET'])
 def fetch_stores():
     try:
@@ -201,6 +203,31 @@ def fetch_stores():
         return {'err_msg':'Unable to fetch stores! --- Database Error'}
     except:
         return {'err_msg':'Unable to fetch stores!'}
+    finally:
+        cur.close()
+
+"""
+    Fetch the store page info of <store_id>
+"""
+@app.route('/store/<int:store_id>', methods=['GET'])
+def store(store_id):
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM STORE WHERE store_id=%s", (store_id))
+        store = cur.fetchall()
+        if len(store) == 0: return {'err_msg':'Invalid Store ID!'}
+
+        #TODO: May add more data fetching needed for store page display
+
+        return {'store' : store[0]}
+    except InterfaceError:
+        return {'err_msg':'Unable to get store info! --- Interface Error'}
+    except DatabaseError:
+        return {'err_msg':'Unable to get store info! --- Database Error'}
+    except:
+        return {'err_msg':'Unable to get store info!'}
+    finally:
+        cur.close()
 
 if __name__ == '__main__':
     app.run(debug=True)
