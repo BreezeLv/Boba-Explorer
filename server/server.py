@@ -10,9 +10,17 @@
 # To create user: run `CREATE USER 'x86'@'localhost' IDENTIFIED BY 'x86x86';` as root
 # To grant privilege: run `GRANT ALL PRIVILEGES ON boba.* TO 'x86'@'localhost';` as root
 
+
+# Add mongodb connection string into our application code : mongodb+srv://x86:x86x86@boba-explorer-wmgsu.mongodb.net/test?retryWrites=true&w=majority
+# Replace <password> with the password for the user : x86x86
+# To install pymongo : `python -m pip install pymongo`
+# To install dnspython : `pip install dnspython`
+
+
 from flask import Flask, request, jsonify, redirect, session
 from flask_cors import CORS
 import pymysql
+import pymongo
 import simplejson as json
 import random
 from datetime import datetime
@@ -33,7 +41,19 @@ from pymysql.err import (
 app = Flask(__name__)
 CORS(app)
 
+#connect to mysql
+
 conn = pymysql.connect(user='x86', host='localhost', passwd='x86x86', db='boba',cursorclass=pymysql.cursors.DictCursor)
+
+#connect to mongodb
+client = pymongo.MongoClient("mongodb+srv://x86:x86x86@boba-explorer-wmgsu.mongodb.net/test?retryWrites=true&w=majority")
+db = client.test
+
+db = client['Boba']
+collection = db['BobaCollection']
+
+
+
 
 @app.route('/')
 def root():
@@ -228,6 +248,19 @@ def store(store_id):
         return {'err_msg':'Unable to get store info!'}
     finally:
         cur.close()
+        
+@app.route('/fetch_store_review')
+def fetch_store_review() :
+    req_body = request.json
+    store_name = req_body['store_name']
+    documents = collection.find({'Store' : store_name}, {'Comment' : 1, '_id' : 0})
+    response = []
+    for document in documents:
+        for val, review in enumerate(document['Comment']) :
+            response.append(review)
+    return {store_name : response}
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
