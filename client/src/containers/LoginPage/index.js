@@ -66,12 +66,12 @@ class LoginPage extends React.Component {
         })
         .then((res) => res.json())
         .then((res) => {
-            if(res && res.user_id) {
+            if(res && typeof(res.user_id)=='number') {
                 //Update Login status and user data
                 if(!res.username) res.username = 'Unknown User';
                 this.props.loginUser(res);
                 this.setState({caught_error:false, err_msg:''});
-                this.props.history.push('/')
+                this.props.history.push('/');
             }
             else {
                 let err_msg = res.err_msg ? res.err_msg : '';

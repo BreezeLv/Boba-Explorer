@@ -29,7 +29,7 @@ function ReviewPage({
 
     const reviewItemFactory = (elem, idx) => (<ReviewItem key={elem.review_content || idx} review={elem} myReview={activeItem === 'my reviews'} updateReview={updateReview} deleteReview={deleteReview}/>);
     const reviewItems = reviews.map(reviewItemFactory);
-    const filterItems = user ? reviews.filter((elem) => elem.user_id === user).map(reviewItemFactory) : [];
+    const filterItems = typeof(user)=='number' ? reviews.filter((elem) => elem.user_id === user).map(reviewItemFactory) : [];
 
     const displayItems = activeItem === 'my reviews' ? filterItems : reviewItems;
 
@@ -44,7 +44,7 @@ function ReviewPage({
                 <Menu.Item
                     name='my reviews'
                     active={activeItem === 'my reviews'}
-                    disabled={!user}
+                    disabled={typeof(user)!=='number'}
                     onClick={changeDisplayMode}
                 />
             </Menu>

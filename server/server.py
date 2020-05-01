@@ -43,7 +43,7 @@ def root():
 def search():
     cur = conn.cursor()
     query = request.args.get('q')
-    sql = "select Product.product_name,Product.size,Product.price,Store.store_name,Store.location,Store.operation_time from Product left join Store on Store.store_id = Product.store_id where product_name like '%" + query + "%'"
+    sql = "select Product.product_name,Product.product_id,Product.size,Product.price,Store.store_name,Store.location,Store.operation_time from Product left join Store on Store.store_id = Product.store_id where product_name like '%" + query + "%'"
     cur.execute(sql)
     datas = cur.fetchall()
     dict = {}
@@ -72,7 +72,7 @@ def register():
         # close connection
         cur.close()
 
-        return {'user_id':user_id}
+        return {'user_id':user_id, 'username':username}
     except InterfaceError:
         return {'err_msg':'Unable to register the user! --- Interface Error'}
     except DatabaseError:

@@ -27,7 +27,7 @@ class SearchResultCard extends React.Component {
     }
 
     onWillComment = () => {
-        if(!this.props.user) this.setState({showModal:false});
+        if(typeof(this.props.user)!=='number') this.setState({showModal:false});
         else this.CommentSwitch();
     }
 
@@ -44,10 +44,10 @@ class SearchResultCard extends React.Component {
         this.CommentSwitch();
 
         const uid = this.props.user;
-        if(!uid) {
-            this.setState({showModal:false});
-            return;
-        }
+        // if(!uid) {
+        //     this.setState({showModal:false});
+        //     return;
+        // }
 
         fetch(server_addr+'/write-review',{
             method: 'POST',

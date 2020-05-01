@@ -47,7 +47,7 @@ function App({
         />
       </Helmet>
 
-      <NavBar logoutHandler={logoutUser} login={user} userData={userData} />
+      <NavBar logoutHandler={logoutUser} login={typeof(user)=='number'} userData={userData} />
 
       <Switch>
         <Route exact path="/" component={HomePage} />
