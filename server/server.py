@@ -42,13 +42,10 @@ app = Flask(__name__)
 CORS(app)
 
 #connect to mysql
-
 conn = pymysql.connect(user='x86', host='localhost', passwd='x86x86', db='boba',cursorclass=pymysql.cursors.DictCursor)
 
 #connect to mongodb
 client = pymongo.MongoClient("mongodb+srv://x86:x86x86@boba-explorer-wmgsu.mongodb.net/test?retryWrites=true&w=majority")
-db = client.test
-
 db = client['Boba']
 collection = db['BobaCollection']
 
@@ -232,14 +229,22 @@ def fetch_stores():
 @app.route('/store/<int:store_id>', methods=['GET'])
 def store(store_id):
     try:
+        # Fetch Store Data
         cur = conn.cursor()
         cur.execute("SELECT * FROM STORE WHERE store_id=%s", (store_id))
         store = cur.fetchall()
         if len(store) == 0: return {'err_msg':'Invalid Store ID!'}
 
+        # Fetch Yelp Review Data
+        yelp_reviews = []
+        documents = collection.find({'Store' : store_id}, {'Comment' : 1, '_id' : 0})
+        for document in documents:
+            for val, review in enumerate(document['Comment']):
+                yelp_reviews.append(review)
+
         #TODO: May add more data fetching needed for store page display
 
-        return {'store' : store[0]}
+        return {'store' : store[0], 'yelp_review' : yelp_reviews}
     except InterfaceError:
         return {'err_msg':'Unable to get store info! --- Interface Error'}
     except DatabaseError:
@@ -248,17 +253,6 @@ def store(store_id):
         return {'err_msg':'Unable to get store info!'}
     finally:
         cur.close()
-        
-@app.route('/fetch_store_review')
-def fetch_store_review() :
-    req_body = request.json
-    store_name = req_body['store_name']
-    documents = collection.find({'Store' : store_name}, {'Comment' : 1, '_id' : 0})
-    response = []
-    for document in documents:
-        for val, review in enumerate(document['Comment']) :
-            response.append(review)
-    return {store_name : response}
 
 
 
