@@ -80,7 +80,7 @@ class SearchResultCard extends React.Component {
                         <Item.Description>
                             ${product.price ? product.price : 'Unknown Price'}
                         </Item.Description>
-                        <Item.Extra as='a'>From teamoji</Item.Extra>
+                        <Item.Extra as='a' href={'/stores/'+product.store_id}>{product.store_name?product.store_name:"Unknown Store"}</Item.Extra>
                         
                         <TransitionGroup animation='swing down' duration={{hide:400,show:900}}>
                             {!this.state.commentVisible && (
