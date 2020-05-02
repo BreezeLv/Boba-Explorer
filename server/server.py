@@ -240,11 +240,11 @@ def store(store_id):
         documents = collection.find({'Store' : store_id}, {'Comment' : 1, '_id' : 0})
         for document in documents:
             for val, review in enumerate(document['Comment']):
-                yelp_reviews.append(review)
+                yelp_reviews.append({'review_content':review})
 
         #TODO: May add more data fetching needed for store page display
 
-        return {'store' : store[0], 'yelp_review' : yelp_reviews}
+        return {'store' : store[0], 'yelp_reviews' : yelp_reviews}
     except InterfaceError:
         return {'err_msg':'Unable to get store info! --- Interface Error'}
     except DatabaseError:

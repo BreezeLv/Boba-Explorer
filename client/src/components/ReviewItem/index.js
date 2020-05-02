@@ -56,27 +56,27 @@ class ReviewItem extends React.Component {
         return (
             <>
                 <Item>
-                        <Item.Image size='tiny'><Icon name='user'>{review.user_name?review.user_name:"Unknown User"}</Icon></Item.Image>
-    
-                        <Item.Content verticalAlign='middle'>
-                            {!this.state.commentVisible && (
-                                <Item.Description>
-                                    {review.review_content ? review.review_content : 'Unknown Review'}
-                                </Item.Description>
-                            )}
-                            
-                            {this.state.commentVisible && editTextarea}
-                        </Item.Content>
-    
-                        {this.props.myReview && (
-                            <Dropdown disabled={this.state.commentVisible} >
-                                <Dropdown.Menu>
-                                    <Dropdown.Item text='Edit' onClick={this.OnEdit} />
-                                    <Dropdown.Item text='Delete' onClick={this.OnDelete} />
-                                </Dropdown.Menu>
-                            </Dropdown>
+                    <Item.Image size='tiny'><Icon name='user'>{review.user_name?review.user_name:"Unknown User"}</Icon></Item.Image>
+
+                    <Item.Content verticalAlign='middle'>
+                        {!this.state.commentVisible && (
+                            <Item.Description>
+                                {review.review_content ? review.review_content : 'Unknown Review'}
+                            </Item.Description>
                         )}
-                    </Item>
+                        
+                        {this.state.commentVisible && editTextarea}
+                    </Item.Content>
+
+                    {this.props.myReview && (
+                        <Dropdown disabled={this.state.commentVisible} >
+                            <Dropdown.Menu>
+                                <Dropdown.Item text='Edit' onClick={this.OnEdit} />
+                                <Dropdown.Item text='Delete' onClick={this.OnDelete} />
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    )}
+                </Item>
             </>
         );
     }
