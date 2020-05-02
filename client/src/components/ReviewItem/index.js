@@ -56,7 +56,7 @@ class ReviewItem extends React.Component {
         return (
             <>
                 <Item>
-                        <Item.Image size='tiny'><Icon name='user'>userX</Icon></Item.Image>
+                        <Item.Image size='tiny'><Icon name='user'>{review.user_name?review.user_name:"Unknown User"}</Icon></Item.Image>
     
                         <Item.Content verticalAlign='middle'>
                             {!this.state.commentVisible && (

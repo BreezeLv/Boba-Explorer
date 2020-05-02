@@ -198,10 +198,10 @@ def fetch_review_user():
 def fetch_review():
 
     cur = conn.cursor()
-    cur.execute("SELECT * FROM REVIEW_FROM_USER")
-    datas = cur.fetchall()
+    cur.execute("SELECT * FROM REVIEW_FROM_USER NATURAL JOIN (SELECT user_id, user_name from USER) u")
+    data = cur.fetchall()
 
-    return {'reviews' : datas}
+    return {'reviews' : data}
 
 """
     Fetch all stores
