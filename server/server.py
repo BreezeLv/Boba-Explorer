@@ -236,11 +236,13 @@ def store(store_id):
         if len(store) == 0: return {'err_msg':'Invalid Store ID!'}
 
         # Fetch Yelp Review Data
-        yelp_reviews = []
-        documents = collection.find({'Store' : store_id}, {'Comment' : 1, '_id' : 0})
+        yelp_reviews = {}
+        documents = collection.find({'Store' : store_id}, {'User' : 1, 'Comment' : 1, '_id' : 0})
         for document in documents:
-            for val, review in enumerate(document['Comment']):
-                yelp_reviews.append({'review_content':review})
+            user = document['User'] if 'User' in document else 'Yelp User'
+            for idx, review in enumerate(document['Comment']):
+                if user in yelp_reviews: yelp_reviews[user].append(review)
+                else: yelp_reviews[user] = [review]
 
         #TODO: May add more data fetching needed for store page display
 

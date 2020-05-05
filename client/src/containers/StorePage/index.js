@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-import { Divider, Item, Icon, Header, Image, List, Label} from 'semantic-ui-react';
+import { Divider, Item, Icon, Header, Image, List, Label, Rating} from 'semantic-ui-react';
 
 import {server_addr} from '../../const';
 
 function StorePage() {
     const [store, setStore] = useState({});
-    const [yelp_reviews, setYelpReviews] = useState([]);
+    const [yelp_reviews, setYelpReviews] = useState({});
     const { store_id } = useParams();
 
     useEffect(() => {
@@ -19,17 +19,22 @@ function StorePage() {
         .catch(console.log)
     }, [store_id]);
 
-    const yelp_reviews_display = yelp_reviews.map((review,idx)=>(
-        <Item key={idx}>
-            <Item.Image size='tiny'><Icon name='user'>{review.user_name?review.user_name:"Yelp User"}</Icon></Item.Image>
+    const yelp_reviews_display = []
+    for (let user of Object.keys(yelp_reviews)) {
+        yelp_reviews_display.push(yelp_reviews[user].map((review,idx)=>(
+            <Item key={user+idx.toString()}>
+                <Item.Image size='small'><Icon name='user'>{"Yelp User " + user}</Icon></Item.Image>
 
-            <Item.Content verticalAlign='middle'>
-                <Item.Description>
-                    {review.review_content ? review.review_content : 'Unknown Review'}
-                </Item.Description>
-            </Item.Content>
-        </Item>
-    ))
+                <Item.Content verticalAlign='middle'>
+                    <Item.Header><Rating defaultRating={review.Rating} maxRating={5} disabled /></Item.Header>
+                    <Item.Meta>{review['Date']}</Item.Meta>
+                    <Item.Description>
+                        {review.Review ? review.Review : 'Unknown Review'}
+                    </Item.Description>
+                </Item.Content>
+            </Item>
+        )))
+    }
 
     return (
         <>
