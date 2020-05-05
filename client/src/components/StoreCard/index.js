@@ -1,5 +1,6 @@
 import React from 'react';
 import { Rating, Item } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 function StoreCard({
     store
@@ -9,7 +10,7 @@ function StoreCard({
 
     return (
         <>
-            <Item style={{maxWidth:450}} href={'/stores/'+store_id}>
+            <Item style={{maxWidth:450}} as={Link} to={'/stores/'+store_id}>
                 <Item.Image size='small' src={store_cover_url} />
 
                 <Item.Content verticalAlign='middle'>
